@@ -1,4 +1,6 @@
-﻿namespace Thesaurus.Core
+﻿using Thesaurus.core;
+
+namespace Thesaurus.Core
 {
     public class ThesaurusService : IThesaurus
     {
