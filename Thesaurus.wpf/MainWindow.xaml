@@ -1,12 +1,55 @@
 ﻿<Window x:Class="Thesaurus.wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Thesaurus.wpf"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Thesaurus" Height="520" Width="720">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Add section -->
+        <GroupBox Padding="8">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="Word:" Width="60" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Word, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Synonyms:" Width="60" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding SynonymsCsv, UpdateSourceTrigger=PropertyChanged}" Width="380" ToolTip="Seperate the synonyms with comma"/>
+                    <Button Content="Add" Margin="8,0,0,0" Command="{Binding AddCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <Separator Grid.Row="1"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- All words -->
+            <GroupBox Header="All words" Padding="8" Grid.Column="0" Margin="0,0,8,0">
+                <DockPanel>
+                    <ListBox ItemsSource="{Binding AllWordsView}"
+                             SelectedItem="{Binding SelectedWord, Mode=TwoWay}"
+                             />
+                </DockPanel>
+            </GroupBox>
+
+            <!-- Synonyms -->
+            <GroupBox Header="Synonyms" Padding="8" Grid.Column="1">
+                <DockPanel>
+                    <ListBox ItemsSource="{Binding Synonyms}"
+                             SelectedItem="{Binding SelectedSynonym, Mode=TwoWay}"
+                             />
+                </DockPanel>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>
