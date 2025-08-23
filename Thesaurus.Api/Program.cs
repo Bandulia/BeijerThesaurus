@@ -1,7 +1,7 @@
-using Thesaurus.core;
-using Thesaurus.Core;
 using Thesaurus.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using Thesaurus.core.Interfaces;
+using Thesaurus.core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

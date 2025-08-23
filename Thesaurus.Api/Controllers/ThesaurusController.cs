@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Thesaurus.Core;
 using Thesaurus.Api.Models;
-using Thesaurus.core;
+using Thesaurus.core.Interfaces;
 
 namespace Thesaurus.Api.Controllers;
 

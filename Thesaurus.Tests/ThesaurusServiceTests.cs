@@ -1,5 +1,5 @@
-using Thesaurus.core;
-using Thesaurus.Core;
+using Thesaurus.core.Interfaces;
+using Thesaurus.core.Services;
 
 namespace Thesaurus.Tests
 {

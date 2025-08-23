@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
-namespace Thesaurus.wpf
+namespace Thesaurus.wpf.Commands
 {
     public sealed class AsyncRelayCommand : ICommand
     {

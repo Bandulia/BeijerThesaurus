@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Thesaurus.core.Entities;
-using Thesaurus.core;
 using Thesaurus.Core.Data;
+using Thesaurus.core.Interfaces;
 
-namespace Thesaurus.Core;
+namespace Thesaurus.core.Services;
 
 public class ThesaurusServiceEf : IThesaurus
 {

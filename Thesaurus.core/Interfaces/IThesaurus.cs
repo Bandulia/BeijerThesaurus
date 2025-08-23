@@ -1,4 +1,4 @@
-﻿namespace Thesaurus.core
+﻿namespace Thesaurus.core.Interfaces
 {
     public interface IThesaurus
     {

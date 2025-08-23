@@ -1,10 +1,10 @@
-﻿using Thesaurus.core;
+﻿using Thesaurus.core.Interfaces;
 
-namespace Thesaurus.Core
+namespace Thesaurus.core.Services
 {
     public class ThesaurusService : IThesaurus
     {
- 
+
         private Dictionary<string, HashSet<string>> _thesaurusDictionary = new(StringComparer.OrdinalIgnoreCase);
         private SortedSet<string> _allWords = new(StringComparer.OrdinalIgnoreCase);
 

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Data; // ICollectionView
+using System.Windows.Data; 
+using Thesaurus.wpf.Commands;
 using Thesaurus.Wpf.Services;
 
-namespace Thesaurus.wpf
+namespace Thesaurus.wpf.ViewModels
 {
     public sealed class MainViewModel : INotifyPropertyChanged
     {
-        // BYT porten till din API-port
         private readonly ThesaurusApi _api = new("https://localhost:7275");
 
         public ObservableCollection<string> AllWords { get; } = new();
@@ -25,7 +23,6 @@ namespace Thesaurus.wpf
             {
                 if (Set(ref _word, value))
                 {
-                    // filtrera listan live
                     AllWordsView.Refresh();
                     AddCommand.RaiseCanExecuteChanged();
                 }
@@ -47,7 +44,6 @@ namespace Thesaurus.wpf
             {
                 if (Set(ref _selectedWord, value) && !string.IsNullOrWhiteSpace(value))
                 {
-                    // klick på ord → fyll textbox och ladda synonymer
                     Word = value;
                     _ = LoadSynonymsAsync(value);
                 }
@@ -62,9 +58,8 @@ namespace Thesaurus.wpf
             {
                 if (Set(ref _selectedSynonym, value) && !string.IsNullOrWhiteSpace(value))
                 {
-                    // klick på synonym → navigera till det ordet
                     Word = value;
-                    SelectedWord = value; // markerar i AllWords om finns
+                    SelectedWord = value;
                     _ = LoadSynonymsAsync(value);
                 }
             }
@@ -75,7 +70,6 @@ namespace Thesaurus.wpf
 
         public MainViewModel()
         {
-            // vy för filter
             AllWordsView = CollectionViewSource.GetDefaultView(AllWords);
             AllWordsView.Filter = o =>
             {
@@ -103,7 +97,6 @@ namespace Thesaurus.wpf
             await RefreshAllAsync();
             await LoadSynonymsAsync(word);
 
-            // rensa input för synonymer efter add
             SynonymsCsv = string.Empty;
         }
 
@@ -117,7 +110,6 @@ namespace Thesaurus.wpf
 
             AllWordsView.Refresh();
 
-            // om Word har innehåll – uppdatera synonymer för den
             var wq = Word?.Trim();
             if (!string.IsNullOrWhiteSpace(wq))
                 await LoadSynonymsAsync(wq);
@@ -133,7 +125,6 @@ namespace Thesaurus.wpf
                 Synonyms.Add(s);
         }
 
-        // INotifyPropertyChanged-helper
         public event PropertyChangedEventHandler? PropertyChanged;
         private bool Set<T>(ref T field, T value, [CallerMemberName] string? name = null)
         {
