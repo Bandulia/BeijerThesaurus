@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesaurus.core", "Thesaurus.core\Thesaurus.core.csproj", "{48DCFFCB-F900-4C3A-B302-4C761414A6D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesaurus.Tests", "Thesaurus.Tests\Thesaurus.Tests.csproj", "{5F28874F-6908-43BA-8D43-0B3779AEA0D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesaurus.Api", "Thesaurus.Api\Thesaurus.Api.csproj", "{46D13198-E71C-4E62-9C8A-34CCD66C8B02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thesaurus.wpf", "Thesaurus.wpf\Thesaurus.wpf.csproj", "{869EF122-36EF-4F14-8685-3180B643B903}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{5F28874F-6908-43BA-8D43-0B3779AEA0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F28874F-6908-43BA-8D43-0B3779AEA0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F28874F-6908-43BA-8D43-0B3779AEA0D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D13198-E71C-4E62-9C8A-34CCD66C8B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D13198-E71C-4E62-9C8A-34CCD66C8B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D13198-E71C-4E62-9C8A-34CCD66C8B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D13198-E71C-4E62-9C8A-34CCD66C8B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869EF122-36EF-4F14-8685-3180B643B903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869EF122-36EF-4F14-8685-3180B643B903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869EF122-36EF-4F14-8685-3180B643B903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869EF122-36EF-4F14-8685-3180B643B903}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
