@@ -19,6 +19,7 @@ namespace Thesaurus.wpf
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
     }
 }
