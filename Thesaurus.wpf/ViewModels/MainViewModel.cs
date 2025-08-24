@@ -11,9 +11,23 @@ namespace Thesaurus.wpf.ViewModels
     {
         private readonly ThesaurusApi _api = new("https://localhost:7275");
 
+        // Collection of all words in the thesaurus  
         public ObservableCollection<string> AllWords { get; } = new();
+
+        // View for filtering and sorting AllWords  
         public ICollectionView AllWordsView { get; }
+
+        // Collection of synonyms for the selected word  
         public ObservableCollection<string> Synonyms { get; } = new();
+
+        private string? _filterTerm;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         private string? _word;
         public string? Word
@@ -23,6 +37,8 @@ namespace Thesaurus.wpf.ViewModels
             {
                 if (Set(ref _word, value))
                 {
+                    _filterTerm = value?.Trim();
+                    OnPropertyChanged();
                     AllWordsView.Refresh();
                     AddCommand.RaiseCanExecuteChanged();
                 }
@@ -45,7 +61,10 @@ namespace Thesaurus.wpf.ViewModels
                 if (Set(ref _selectedWord, value) && !string.IsNullOrWhiteSpace(value))
                 {
                     Word = value;
+                    _filterTerm = null;
+                    OnPropertyChanged(nameof(Word));
                     _ = LoadSynonymsAsync(value);
+                    AllWordsView.Refresh();
                 }
             }
         }
@@ -65,18 +84,21 @@ namespace Thesaurus.wpf.ViewModels
             }
         }
 
+        // Command to add a new word and its synonyms  
         public AsyncRelayCommand AddCommand { get; }
+
+        // Command to refresh the list of all words  
         public AsyncRelayCommand RefreshCommand { get; }
 
         public MainViewModel()
         {
+            // Initialize the view for filtering words  
             AllWordsView = CollectionViewSource.GetDefaultView(AllWords);
             AllWordsView.Filter = o =>
             {
-                if (o is not string s) return false;
-                var q = Word?.Trim();
-                return string.IsNullOrWhiteSpace(q)
-                    || s.Contains(q, StringComparison.OrdinalIgnoreCase);
+                if (_filterTerm is null || _filterTerm.Length == 0) return true;
+                var w = o as string;
+                return w?.IndexOf(_filterTerm, StringComparison.OrdinalIgnoreCase) >= 0;
             };
 
             AddCommand = new AsyncRelayCommand(AddAsync, () => !string.IsNullOrWhiteSpace(Word));
@@ -85,11 +107,13 @@ namespace Thesaurus.wpf.ViewModels
             _ = RefreshAllAsync();
         }
 
+        // Adds a new word and its synonyms to the thesaurus  
         private async Task AddAsync()
         {
             var word = Word?.Trim();
             if (string.IsNullOrWhiteSpace(word)) return;
 
+            // Parse the CSV string of synonyms into a list  
             var syns = (SynonymsCsv ?? string.Empty)
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
@@ -100,6 +124,7 @@ namespace Thesaurus.wpf.ViewModels
             SynonymsCsv = string.Empty;
         }
 
+        // Refreshes the list of all words from the API  
         private async Task RefreshAllAsync()
         {
             var words = await _api.GetAllWordsAsync();
@@ -117,6 +142,7 @@ namespace Thesaurus.wpf.ViewModels
                 Synonyms.Clear();
         }
 
+        // Loads synonyms for a specific word from the API  
         private async Task LoadSynonymsAsync(string word)
         {
             var list = await _api.GetSynonymsAsync(word);
@@ -125,7 +151,7 @@ namespace Thesaurus.wpf.ViewModels
                 Synonyms.Add(s);
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        // Helper method to set a property and notify listeners  
         private bool Set<T>(ref T field, T value, [CallerMemberName] string? name = null)
         {
             if (Equals(field, value)) return false;
