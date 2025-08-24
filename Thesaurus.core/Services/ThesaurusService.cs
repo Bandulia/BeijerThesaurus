@@ -53,7 +53,7 @@ namespace Thesaurus.core.Services
 
             if (_thesaurusDictionary.TryGetValue(w, out var set))
             {
-                return set.OrderBy(x => x, StringComparer.OrdinalIgnoreCase).ToArray();
+                return set.OrderBy(word => word, StringComparer.OrdinalIgnoreCase).ToArray();
             }
 
             return Array.Empty<string>();
@@ -62,7 +62,7 @@ namespace Thesaurus.core.Services
         // Return all of the words in the dictionary in order 
         public IReadOnlyCollection<string> GetAllWords()
         {
-            return _allWords.ToArray();
+            return _allWords.OrderBy(word => word, StringComparer.OrdinalIgnoreCase).ToArray();
         }
     }
 }
